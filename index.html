@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Axios CRUD</title>
+        <link rel="stylesheet" href="/CSS/milligram.css">
+    </head>
+    <body>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>Product Name</td>
+                    <td>Product Code</td>
+                    <td>Unit Price</td>
+                    <td>Quantity</td>
+                    <td>Delete</td>
+                    <td>Update</td>
+                </tr>
+            </thead>
+            <tbody id="itemlist">
+
+            </tbody>
+        </table>
+
+
+
+        <script src="axiosConfig/axios.min.js">
+        </script>
+
+        
+        <script>
+         getList();
+          async function getList(){
+            let res=await axios.get('https://crud.teamrabbil.com/api/v1/ReadProduct');
+
+            if(res.status==200){
+                let list = res.data['data']
+                list.forEach(item => {
+                  
+                    document.getElementById('itemlist').innerHTML+=
+                    `
+                    <tr>    
+                   td>${item['ProductName']}</td>
+                   <td>${item['ProductCode']}</td>
+                   <td>${item['UnitPrice']}</td>
+                   <td>${item['Qty']}</td>
+                   <td>${item['TotalPrice']}</td> 
+                   <td><button onclick="deleteItem('${item['_id']}')">Delete</button></td>
+                   <td><button onClick="updateItem('${item['_id']}')">Update</update></td>      
+                    </tr>
+                    `
+
+                });
+            }
+            else{
+                console.log('error');
+            }
+
+          }
+
+          async function deleteItem(id){
+
+            let res= await axios.get(`https://crud.teamrabbil.com/api/v1/DeleteProduct/${id}`);
+            if(res.status ==200){
+                alert('deleted');
+                document.getElementById('itemlist').innerHTML+=""
+                getList();
+            }
+
+            else{
+                alert('error');
+            }
+          }
+
+          async function updateItem(id){
+                  window.location=`update.html?id=${id}`;
+             }
+             
+        </script>
+    </body>
+</html>
