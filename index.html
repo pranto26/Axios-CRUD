@@ -5,6 +5,11 @@
         <link rel="stylesheet" href="/CSS/milligram.css">
     </head>
     <body>
+        <div class="container">
+            <div class="row">
+                <a href="create.html" class="button button-outline float-left">Create New</a>
+            </div>
+        </div>
 
         <table>
             <thead>
@@ -53,7 +58,7 @@
                 });
             }
             else{
-                console.log('error');
+                alert("wrong");
             }
 
           }
@@ -64,7 +69,7 @@
             if(res.status ==200){
                 alert('deleted');
                 document.getElementById('itemlist').innerHTML+=""
-                getList();
+                await getList();
             }
 
             else{
